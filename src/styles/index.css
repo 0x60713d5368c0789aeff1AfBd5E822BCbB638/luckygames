@@ -1,0 +1,46 @@
+@charset "UTF-8";
+html,
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+html {
+  font-size: calc(100vw / 3.9);
+}
+
+body {
+  font-size: 0.12rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #1e292f;
+  color: #f2f2f2;
+}
+.global_width {
+  width: 100%;
+  max-width: 14rem;
+  margin: 0 auto;
+}
+
+h1,
+h2 {
+  margin: 0;
+}
+
+button {
+  border: none;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+.popup-tips .ant-modal-content {
+  background-color: transparent;
+  box-shadow: none;
+}
+.popup-tips .ant-modal-content .ant-modal-body {
+  padding: 0;
+}

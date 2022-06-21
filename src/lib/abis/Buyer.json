@@ -1,0 +1,90 @@
+[
+    {
+      "inputs": [],
+      "name": "OnlyDev",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint8",
+          "name": "version",
+          "type": "uint8"
+        }
+      ],
+      "name": "Initialized",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "buyAndBurn",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "info",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "balance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "autoBurnedBnb",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "autoBurnedFdao",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "manualBurnedBnb",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "manualBurnedFdao",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Buyer.Info",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_fdao",
+          "type": "address"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ]
