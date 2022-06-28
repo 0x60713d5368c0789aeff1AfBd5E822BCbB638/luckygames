@@ -1,49 +1,35 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from 'react'
 
-import { useStores } from "@/hooks";
-import { observer } from "mobx-react-lite";
+import { useStores } from '@/hooks'
+import { observer } from 'mobx-react-lite'
 
-import styled from "styled-components";
+import styled from 'styled-components'
 export default observer((props: any) => {
-  let { endTime } = props;
-  let timmer: any = useRef().current;
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(0)
   useEffect(() => {
-    const now = (Date.now() / 1000) << 0;
-    if (endTime <= now) {
-      setSeconds(0);
-      clearInterval(timmer);
-      return;
-    }
-    setSeconds(endTime - now);
-    timmer = setInterval(() => {
-      const now = (Date.now() / 1000) << 0;
-      if (endTime <= now) {
-        setSeconds(0);
-        clearInterval(timmer);
-      } else {
-        setSeconds(endTime - now);
-      }
-    }, 1000);
-    return () => clearInterval(timmer);
-  }, [endTime]);
+    const timmer = setInterval(() => {
+      const now = (Date.now() / 1000) << 0
+      setSeconds(86400 - (now % 86400))
+    }, 1000)
+    return () => clearInterval(timmer)
+  }, [])
   const getSingleNum = (numStr: string, index: number) => {
     if (index > 0) {
-      return numStr.substring(index);
+      return numStr.substring(index)
     } else {
-      return numStr.substring(index, 1);
+      return numStr.substring(index, 1)
     }
-  };
+  }
   const display = useMemo(() => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds - hours * 3600) / 60);
-    const _seconds = Math.floor(seconds % 60);
+    const hours = Math.floor(seconds / 3600)
+    const minutes = Math.floor((seconds - hours * 3600) / 60)
+    const _seconds = Math.floor(seconds % 60)
     return {
-      hours: hours.toString().padStart(2, "0"),
-      minutes: minutes.toString().padStart(2, "0"),
-      seconds: _seconds.toString().padStart(2, "0"),
-    };
-  }, [seconds]);
+      hours: hours.toString().padStart(2, '0'),
+      minutes: minutes.toString().padStart(2, '0'),
+      seconds: _seconds.toString().padStart(2, '0'),
+    }
+  }, [seconds])
   return (
     <CountDownStyle>
       <div className="count_box">
@@ -55,7 +41,7 @@ export default observer((props: any) => {
               <div className="num">{getSingleNum(display.hours, 1)}</div>
             </div>
             <div className="txt">
-              <img src={createURL("icons/icon_hrs.png")} />
+              <img src={createURL('icons/icon_hrs.png')} />
             </div>
           </div>
           <div className="colon">:</div>
@@ -65,7 +51,7 @@ export default observer((props: any) => {
               <div className="num">{getSingleNum(display.minutes, 1)}</div>
             </div>
             <div className="txt">
-              <img src={createURL("icons/icon_mins.png")} />
+              <img src={createURL('icons/icon_mins.png')} />
             </div>
           </div>
           <div className="colon">:</div>
@@ -75,20 +61,20 @@ export default observer((props: any) => {
               <div className="num">{getSingleNum(display.seconds, 1)}</div>
             </div>
             <div className="txt">
-              <img src={createURL("icons/icon_secs.png")} />
+              <img src={createURL('icons/icon_secs.png')} />
             </div>
           </div>
         </div>
       </div>
     </CountDownStyle>
-  );
-});
+  )
+})
 const CountDownStyle = styled.div`
   padding: 0.05rem 0.16rem 0;
   .count_box {
     width: 100%;
     height: 0.92rem;
-    background: url(${createURL("count_bg.png")}) no-repeat center / contain;
+    background: url(${createURL('count_bg.png')}) no-repeat center / contain;
   }
   .fado {
     position: relative;
@@ -118,8 +104,7 @@ const CountDownStyle = styled.div`
         line-height: 0.38rem;
         font-size: 0.24rem;
         font-weight: 600;
-        background: url(${createURL("count_num_bg.png")}) no-repeat
-          center/contain;
+        background: url(${createURL('count_num_bg.png')}) no-repeat center/contain;
         &:last-child {
           margin-left: 0.03rem;
         }
@@ -133,4 +118,4 @@ const CountDownStyle = styled.div`
       }
     }
   }
-`;
+`

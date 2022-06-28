@@ -1,17 +1,65 @@
-import { useState } from "react";
-import copy from "copy-to-clipboard";
-import { useLocation } from "react-router-dom";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import { useEffect, useMemo, useState } from 'react'
+import copy from 'copy-to-clipboard'
+import { useLocation } from 'react-router-dom'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 
-import { observer } from "mobx-react-lite";
+import { observer } from 'mobx-react-lite'
 
-import styled from "styled-components";
-import Title from "../components/title";
-import { useClaim } from "@/lib/claim";
-import Modal from "@/components/ui/Modal";
-import { useWallet } from "@/lib/wallet";
+import styled from 'styled-components'
+import Title from '../components/title'
+import Modal from '@/components/ui/Modal'
+import { useWallet } from '@/lib/wallet'
+import { useLucky } from '@/lib/lucky'
+import { useRank } from '@/lib/rank'
+import { usePool } from '@/lib/pool'
+
 export default observer(() => {
+  const [seconds, setSeconds] = useState(0)
+  useEffect(() => {
+    const timmer = setInterval(() => {
+      const now = (Date.now() / 1000) << 0
+      setSeconds(86400 - (now % 86400))
+    }, 1000)
+    return () => clearInterval(timmer)
+  }, [])
+  const display = useMemo(() => {
+    const hours = Math.floor(seconds / 3600)
+    const minutes = Math.floor((seconds - hours * 3600) / 60)
+    const _seconds = Math.floor(seconds % 60)
+    return {
+      hours: hours.toString().padStart(2, '0'),
+      minutes: minutes.toString().padStart(2, '0'),
+      seconds: _seconds.toString().padStart(2, '0'),
+    }
+  }, [seconds])
+
+  const { income, dividends, bonus, claim, totalBonus, totalDividends, totalPay } = useLucky()
+  const { totalReward } = useRank()
+  const pool = usePool()
+
+  const [loading, setLoading] = useState(false)
+
+  const handleLuckyClaim = () => {
+    setLoading(true)
+    claim()
+      .then(() => {
+        Modal.success('Claim success')
+      })
+      .catch(Modal.error)
+      .finally(() => setLoading(false))
+  }
+
+  const handlePoolClaim = () => {
+    setLoading(true)
+    pool
+      .claim()
+      .then(() => {
+        Modal.success('Claim success')
+      })
+      .catch(Modal.error)
+      .finally(() => setLoading(false))
+  }
   return (
     <ViewStyled>
       <Header />
@@ -25,7 +73,7 @@ export default observer(() => {
                 <div className="list_item">
                   <label>Countdown</label>
                   <div className="time_view">
-                    <span>12H</span>:<span>29M</span>:<span>42S</span>
+                    <span>{display.hours}H</span>:<span>{display.minutes}M</span>:<span>{display.seconds}S</span>
                   </div>
                 </div>
                 <div className="list_item">
@@ -38,36 +86,36 @@ export default observer(() => {
                 <div className="list_item">
                   <label>Generated revenue</label>
                   <div className="value">
-                    <span className="val_num">400</span>
+                    <span className="val_num">{income.toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
                   </div>
                 </div>
                 <div className="list_item">
                   <label>Withdrawable dividends</label>
                   <div className="value">
-                    <span className="val_num">400</span>
+                    <span className="val_num">{dividends.toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
                   </div>
                 </div>
                 <div className="list_item">
                   <label>Withdrawable bonus</label>
                   <div className="value">
-                    <span className="val_num">400</span>
+                    <span className="val_num">{bonus.toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
                   </div>
                 </div>
                 <div className="list_item">
                   <label>Total withdrawable </label>
                   <div className="value">
-                    <span className="val_num">400</span>
+                    <span className="val_num">{dividends.add(bonus).toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
                   </div>
                 </div>
               </div>
               <div className="card_btm_btn">
-                <a href="">
-                  <img src={createURL("btns/btn_claim.png")} />
-                </a>
+                <button disabled={loading || dividends.add(bonus).lte(0)} onClick={handleLuckyClaim}>
+                  <img src={createURL('btns/btn_claim.png')} />
+                </button>
               </div>
             </div>
           </div>
@@ -81,23 +129,23 @@ export default observer(() => {
                 <div className="list_item">
                   <label>Champion income</label>
                   <div className="value">
-                    <span className="val_num">400</span>
+                    <span className="val_num">{totalReward.toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
                   </div>
                 </div>
-                <div className="list_item">
+                {/* <div className="list_item">
                   <label>Withdrawable</label>
                   <div className="value">
                     <span className="val_num">400</span>
                     <span className="val_unit">FDAO</span>
                   </div>
-                </div>
+                </div> */}
               </div>
-              <div className="card_btm_btn">
+              {/* <div className="card_btm_btn">
                 <a href="">
-                  <img src={createURL("btns/btn_claim.png")} />
+                  <img src={createURL('btns/btn_claim.png')} />
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -110,22 +158,22 @@ export default observer(() => {
                 <div className="list_item">
                   <label>Lucky income</label>
                   <div className="value">
-                    <span className="val_num">400</span>
+                    <span className="val_num">{pool.income.toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
                   </div>
                 </div>
                 <div className="list_item">
                   <label>Withdrawable</label>
                   <div className="value">
-                    <span className="val_num">400</span>
+                    <span className="val_num">{pool.isClosed ? pool.income.toFixed(2) : '0.00'}</span>
                     <span className="val_unit">FDAO</span>
                   </div>
                 </div>
               </div>
               <div className="card_btm_btn">
-                <a href="">
-                  <img src={createURL("btns/btn_claim.png")} />
-                </a>
+                <button disabled={loading || pool.income.lte(0) || !pool.isClosed} onClick={handlePoolClaim}>
+                  <img src={createURL('btns/btn_claim.png')} />
+                </button>
               </div>
             </div>
           </div>
@@ -139,21 +187,21 @@ export default observer(() => {
                 <div className="list_item">
                   <label>Total dividends</label>
                   <div className="value">
-                    <span className="val_num">400</span>
+                    <span className="val_num">{totalDividends.toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
                   </div>
                 </div>
                 <div className="list_item">
                   <label>Total bonus</label>
                   <div className="value">
-                    <span className="val_num">400</span>
+                    <span className="val_num">{totalBonus.toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
                   </div>
                 </div>
                 <div className="list_item">
                   <label>Total joinFDAO</label>
                   <div className="value">
-                    <span className="val_num">400</span>
+                    <span className="val_num">{totalPay.toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
                   </div>
                 </div>
@@ -164,32 +212,30 @@ export default observer(() => {
       </ContentStyle>
       <Footer current="claim" />
     </ViewStyled>
-  );
-});
+  )
+})
 const ViewStyled = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
-`;
+`
 const ContentStyle = styled.div`
   flex: 1;
   height: 0;
   flex-shrink: 0;
   padding: 0.25rem;
   overflow-y: auto;
-  background: url(${createURL("page_bg.png")}) no-repeat center top/contain;
+  background: url(${createURL('page_bg.png')}) no-repeat center top/contain;
   .card_view {
     overflow: hidden;
     padding-bottom: 0.5rem;
-    background: url(${createURL("home_btm_bg.png")}) no-repeat center bottom/80%;
+    background: url(${createURL('home_btm_bg.png')}) no-repeat center bottom/80%;
     .card_bg {
       padding: 0 0.16rem 0.36rem;
-      background: url(${createURL("card_view_bg.png")}) no-repeat center
-        bottom/100% 100%;
+      background: url(${createURL('card_view_bg.png')}) no-repeat center bottom/100% 100%;
       &.lg {
-        background: url(${createURL("this_round_bg.png")}) no-repeat center
-          bottom/100% 100%;
+        background: url(${createURL('this_round_bg.png')}) no-repeat center bottom/100% 100%;
       }
     }
 
@@ -198,7 +244,9 @@ const ContentStyle = styled.div`
       .card_btm_btn {
         margin-top: 0.3rem;
         text-align: center;
-        a {
+        button {
+          background: none;
+          outline: none;
           display: inline-block;
           img {
             height: 0.4rem;
@@ -209,8 +257,7 @@ const ContentStyle = styled.div`
       .list_view {
         &.list_bg {
           padding: 0.2rem 0.14rem;
-          background: url(${createURL("results_bg.png")}) no-repeat center /
-            100% 100%;
+          background: url(${createURL('results_bg.png')}) no-repeat center / 100% 100%;
         }
         .list_item {
           margin-top: 0.1rem;
@@ -248,7 +295,7 @@ const ContentStyle = styled.div`
               background-color: #732aff;
               text-align: center;
               overflow: hidden;
-              text-overflow: ellipsis;
+              /* text-overflow: ellipsis; */
               white-space: nowrap;
             }
           }
@@ -256,4 +303,4 @@ const ContentStyle = styled.div`
       }
     }
   }
-`;
+`

@@ -1,7 +1,6 @@
-import Fomo from './Fomo.json'
-import Inviters from './Inviters.json'
-import TierMint from './TierMint.json'
+import Lucky from './Lucky.json'
+import Rank from './Rank.json'
+import Pool from './Pool.json'
 import ERC20 from './ERC20.json'
-import Buyer from './Buyer.json'
 
-export default { Fomo, Inviters, TierMint, ERC20, Buyer }
+export default { Lucky, Rank, Pool, ERC20 }

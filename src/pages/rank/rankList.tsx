@@ -1,17 +1,18 @@
-import { observer } from "mobx-react-lite";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectFlip } from "swiper";
-import "swiper/css";
-import "swiper/css/effect-flip";
-import { useRef } from "react";
-import styled from "styled-components";
-import Title from "../components/title";
+import { observer } from 'mobx-react-lite'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { EffectFlip } from 'swiper'
+import 'swiper/css'
+import 'swiper/css/effect-flip'
+import { useRef } from 'react'
+import styled from 'styled-components'
+import Title from '../components/title'
+import { useRank } from '@/lib/rank'
 export default observer(() => {
-  const swiperRef = useRef<any>();
-  const tempArr = new Array(10).fill({
-    mint: 17,
-    address: Date.now(),
-  });
+  const { thisRound, lastRound } = useRank()
+  const swiperRef = useRef<any>()
+  const formatAddress = (a: string) => {
+    return `${a.slice(0, 6)}..${a.slice(38)}`
+  }
   return (
     <SwiperView>
       <Swiper
@@ -21,7 +22,7 @@ export default observer(() => {
         effect="flip"
         flipEffect={{ slideShadows: false }}
         onSwiper={(swiper) => {
-          swiperRef.current = swiper;
+          swiperRef.current = swiper
         }}
       >
         <SwiperSlide className="slide_item" key={0}>
@@ -34,24 +35,24 @@ export default observer(() => {
                 <div className="ad">Address</div>
               </div>
               <div className="list_body">
-                {tempArr.map((item, index) => {
+                {thisRound.map((item, index) => {
                   return (
                     <div key={index} className="list_item">
                       <div className="index">{index + 1}</div>
-                      <div>{item.mint}</div>
-                      <div className="ad">{item.address}</div>
+                      <div>{item.count}</div>
+                      <div className="ad">{formatAddress(item.user)}</div>
                     </div>
-                  );
+                  )
                 })}
               </div>
             </div>
             <div
               className="view_btn"
               onClick={() => {
-                swiperRef.current.slideNext();
+                swiperRef.current.slideNext()
               }}
             >
-              <img src={createURL("btns/btn_view_last.png")} />
+              <img src={createURL('btns/btn_view_last.png')} />
             </div>
           </div>
         </SwiperSlide>
@@ -59,8 +60,8 @@ export default observer(() => {
           <div className="item_view last_view">
             <Title
               style={{
-                color: "#ff2b90",
-                backgroundImage: `url(${createURL("title_bg_pink.png")})`,
+                color: '#ff2b90',
+                backgroundImage: `url(${createURL('title_bg_pink.png')})`,
               }}
             >
               Last round
@@ -72,31 +73,31 @@ export default observer(() => {
                 <div className="ad">Address</div>
               </div>
               <div className="list_body">
-                {tempArr.map((item, index) => {
+                {lastRound.map((item, index) => {
                   return (
                     <div key={index} className="list_item">
                       <div className="index">{index + 1}</div>
-                      <div>{item.mint}</div>
-                      <div className="ad">{item.address}</div>
+                      <div>{item.count}</div>
+                      <div className="ad">{formatAddress(item.user)}</div>
                     </div>
-                  );
+                  )
                 })}
               </div>
             </div>
             <div
               className="view_btn"
               onClick={() => {
-                swiperRef.current.slidePrev();
+                swiperRef.current.slidePrev()
               }}
             >
-              <img src={createURL("btns/btn_view_this.png")} />
+              <img src={createURL('btns/btn_view_this.png')} />
             </div>
           </div>
         </SwiperSlide>
       </Swiper>
     </SwiperView>
-  );
-});
+  )
+})
 
 const SwiperView = styled.div`
   width: 100%;
@@ -108,13 +109,11 @@ const SwiperView = styled.div`
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     .item_view {
       padding: 0.04rem 0.16rem 0.3rem;
-      background: url(${createURL("this_round_bg.png")}) no-repeat center
-        bottom/100% 100%;
+      background: url(${createURL('this_round_bg.png')}) no-repeat center bottom/100% 100%;
 
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       &.last_view {
-        background: url(${createURL("last_round_bg.png")}) no-repeat center
-          bottom/100% 100%;
+        background: url(${createURL('last_round_bg.png')}) no-repeat center bottom/100% 100%;
         .rank_list {
           .list_body {
             border-color: #ff2b90;
@@ -153,8 +152,7 @@ const SwiperView = styled.div`
         .list_title {
           display: flex;
           align-items: center;
-          background: url(${createURL("rank_list_tit_bg.png")}) no-repeat center
-            bottom/100% 100%;
+          background: url(${createURL('rank_list_tit_bg.png')}) no-repeat center bottom/100% 100%;
 
           padding: 0.1rem 0.06rem;
           & > div {
@@ -202,4 +200,4 @@ const SwiperView = styled.div`
       }
     }
   }
-`;
+`

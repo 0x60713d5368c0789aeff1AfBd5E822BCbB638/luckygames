@@ -2,19 +2,17 @@ import { useWallet } from './wallet'
 
 // EDIT
 export const AddressesMainnet = {
-  Fomo: '',
-  TierMint: '',
-  Inviters: '0x83048F0182FBd3845eff1AfBd5F4D2BDe3f03328',
-  Fdao: '',
-  Buyer: '',
+  Fdao: '0xa56E678acE0a15Beb98C493DbB4eC626d58b8F1E',
+  Lucky: '0xcBd7e6EbCadB0f270fff2E05695D6F6A22fCBAae',
+  Pool: '0x4A5C359C8beecE72B682fE21D1547dde63A08132',
+  Rank: '0x6CFb42393bFEbE6E7Bbae305de0F8658F7e26052',
 }
 
 export const AddressesTestnet = {
-  Fomo: '0xf72393176CE5423a703b095600c23ccA790f4419',
-  TierMint: '0x7Eb5d36284B46D29440196ba1F74B2DdE6f95054',
-  Inviters: '0x2a5480c25649aAe2058e9701dBBe0c1e187C9FD7',
-  Fdao: '0x8c48355548890c0Cb973aCbBCf4ce5b5B8c85b66',
-  Buyer: '0xe64d3fe8daC38E035206f16e28fBF62cd92C076F',
+  Lucky: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
+  Pool: '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9',
+  Rank: '0x0165878A594ca255338adfa4d48449f69242Eb8F',
+  Fdao: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
 }
 
 export const useAddress = () => {

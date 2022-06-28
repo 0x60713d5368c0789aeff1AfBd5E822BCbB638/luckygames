@@ -1,50 +1,73 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from 'react'
 
-import { Link } from "react-router-dom";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import { Link } from 'react-router-dom'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 
-import { observer } from "mobx-react-lite";
+import { observer } from 'mobx-react-lite'
 
-import styled from "styled-components";
-import Countdown from "./countdown";
-import { useFomo } from "@/lib/fomo";
-import { useAddress } from "@/lib/address";
-import Title from "../components/title";
+import styled from 'styled-components'
+import Countdown from './countdown'
+import Title from '../components/title'
+import { useBalance } from '@/lib/balance'
+import { useWallet } from '@/lib/wallet'
+import { useAddress } from '@/lib/address'
+import { useLucky } from '@/lib/lucky'
+import { usePool } from '@/lib/pool'
+import { useApprove } from '@/lib/approve'
+import Modal from '@/components/ui/Modal'
 
 export default observer((props: any) => {
   const {
-    value,
-    lastTime,
-    totalSupply,
-    circleSupply,
-    burned,
-    tierMintBalance,
-    countdown,
-  } = useFomo();
+    Contracts: { fdao },
+    address,
+  } = useWallet()
+  const Addresses = useAddress()
+  const rankBalance = useBalance(fdao, Addresses.Rank)
+  const { burned, join, active, income, totalPay } = useLucky()
+  const { balance: poolBalance } = usePool()
+  const { approve, approved } = useApprove(fdao, Addresses.Lucky, address)
+  const balance = useBalance(fdao, address)
 
-  const Addresses = useAddress();
-  const endTime = useMemo(() => {
-    if (lastTime == 0) {
-      return 0;
+  const [loading, setLoading] = useState(false)
+
+  const handleJoin = async () => {
+    setLoading(true)
+    if (!approved) {
+      approve()
+        .then(() => {
+          Modal.success('Approve success, you can join now')
+        })
+        .catch((err) => {
+          Modal.error(err)
+        })
+        .finally(() => setLoading(false))
+    } else {
+      join()
+        .then(() => {
+          Modal.success('Join success')
+        })
+        .catch((err) => {
+          Modal.error(err)
+        })
+        .finally(() => setLoading(false))
     }
-    return lastTime + countdown;
-  }, [lastTime]);
+  }
   return (
     <ViewStyled>
       <Header />
       <ContentStyle>
         <HomeStyle>
           <div className="top_info">
-            <img className="top_img" src={createURL("home_top_img.png")} />
+            <img className="top_img" src={createURL('home_top_img.png')} />
             <div className="ranking_view">
               <div className="ranking_box">
                 <div>
                   <Title>Ranking Pool</Title>
                 </div>
-                <div className="ranking_num">235756.2145</div>
+                <div className="ranking_num">{rankBalance.toFixed(4)}</div>
                 <div className="count_view">
-                  <Countdown endTime={endTime} />
+                  <Countdown />
                 </div>
               </div>
             </div>
@@ -55,30 +78,30 @@ export default observer((props: any) => {
               <p>PLEASE ONLY USE "100FDAO" TO PLAY！</p>
             </div>
             <div className="btn_view">
-              <a href="">
-                <img
-                  className="btn_join"
-                  src={createURL("btns/btn_join_now.png")}
-                />
-              </a>
+              <button disabled={totalPay.gt(0) || loading} onClick={handleJoin}>
+                <img className="btn_join" src={createURL('btns/btn_join_now.png')} />
+              </button>
+            </div>
+            <div className="tips">
+              <p>Your FDAO Balance: {balance.toFixed(2)}</p>
             </div>
           </div>
           <div className="lucky_pool_view">
             <div className="luck_box">
               <div className="box_item">
-                <Title style={{ fontSize: "0.2rem" }}>Lucky Pool</Title>
+                <Title style={{ fontSize: '0.2rem' }}>Lucky Pool</Title>
                 <div className="item_pd">
                   <div className="item_num_box">
-                    <div className="num">235756.2145</div>
+                    <div className="num">{poolBalance.toFixed(4)}</div>
                     <div className="unit">FDAO</div>
                   </div>
                 </div>
               </div>
               <div className="box_item">
-                <Title style={{ fontSize: "0.2rem" }}>Burned FDAO</Title>
+                <Title style={{ fontSize: '0.2rem' }}>Burned FDAO</Title>
                 <div className="item_pd">
                   <div className="item_num_box">
-                    <div className="num">235756.2145</div>
+                    <div className="num">{burned.toFixed(4)}</div>
                     <div className="unit">FDAO</div>
                   </div>
                 </div>
@@ -89,21 +112,21 @@ export default observer((props: any) => {
       </ContentStyle>
       <Footer />
     </ViewStyled>
-  );
-});
+  )
+})
 const ViewStyled = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
-`;
+`
 const ContentStyle = styled.div`
   position: relative;
   flex: 1;
   height: 0;
   flex-shrink: 0;
   overflow-y: auto;
-`;
+`
 const HomeStyle = styled.div`
   .top_info {
     text-align: center;
@@ -128,8 +151,7 @@ const HomeStyle = styled.div`
       .ranking_box {
         width: 100%;
         height: 2rem;
-        background: url(${createURL("rank_pool_box.png")}) no-repeat center
-          bottom/100% 100%;
+        background: url(${createURL('rank_pool_box.png')}) no-repeat center bottom/100% 100%;
       }
       .ranking_num {
         font-size: 0.3rem;
@@ -149,17 +171,21 @@ const HomeStyle = styled.div`
       height: 0.42rem;
       object-fit: contain;
     }
+    button {
+      background: none;
+      outline: none;
+    }
   }
   .lucky_pool_view {
     margin-top: 0.16rem;
     padding: 0 0.25rem 0.6rem;
-    background: url(${createURL("home_btm_bg.png")}) no-repeat center bottom/80%;
+    background: url(${createURL('home_btm_bg.png')}) no-repeat center bottom/80%;
     .luck_box {
       width: 100%;
       padding: 0.18rem;
       display: flex;
       align-items: center;
-      background: url(${createURL("lucky_box.png")}) no-repeat center/100% 100%;
+      background: url(${createURL('lucky_box.png')}) no-repeat center/100% 100%;
       .box_item {
         flex: 1;
         border: 1px solid transparent;
@@ -167,8 +193,7 @@ const HomeStyle = styled.div`
         background-color: #222;
         background-clip: padding-box, border-box;
         background-origin: padding-box, border-box;
-        background-image: linear-gradient(to bottom, #222, #222),
-          linear-gradient(to bottom, #732aff, #d627fd);
+        background-image: linear-gradient(to bottom, #222, #222), linear-gradient(to bottom, #732aff, #d627fd);
         &:last-child {
           margin-left: 0.08rem;
         }
@@ -198,4 +223,4 @@ const HomeStyle = styled.div`
       }
     }
   }
-`;
+`

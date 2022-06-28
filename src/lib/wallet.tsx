@@ -3,9 +3,8 @@ import { createContext, FC, useCallback, useContext, useEffect, useMemo, useRef,
 import { ExternalProvider, JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 import { ethers } from 'ethers'
 import ABI from './abis'
-import { ERC20, Fomo, Inviters, TierMint } from './typechain'
+import { ERC20, Lucky, Pool, Rank } from './typechain'
 import { AddressesMainnet, AddressesTestnet } from './address'
-import { Buyer } from './typechain/Buyer'
 
 interface IWalletContext {
   address?: string
@@ -14,10 +13,9 @@ interface IWalletContext {
   signer?: JsonRpcSigner
   Contracts: {
     fdao: ERC20
-    fomo: Fomo
-    inviters: Inviters
-    tierMint: TierMint
-    buyer: Buyer
+    lucky: Lucky
+    pool: Pool
+    rank: Rank
   }
   provider: ethers.providers.Provider
   chainId: number
@@ -28,10 +26,9 @@ const WalletContext = createContext<IWalletContext>({
   disconnect: () => {},
   Contracts: {
     fdao: {} as ERC20,
-    fomo: {} as Fomo,
-    inviters: {} as Inviters,
-    tierMint: {} as TierMint,
-    buyer: {} as Buyer,
+    lucky: {} as Lucky,
+    pool: {} as Pool,
+    rank: {} as Rank,
   },
   provider: ethers.getDefaultProvider(),
   chainId: 56,
@@ -86,10 +83,9 @@ export const WalletProvider: FC<WalletProviderProps> = ({ children, name, chainI
   const Contracts = useMemo(() => {
     return {
       fdao: new ethers.Contract(Addresses.Fdao, ABI.ERC20, provider) as ERC20,
-      fomo: new ethers.Contract(Addresses.Fomo, ABI.Fomo, provider) as Fomo,
-      inviters: new ethers.Contract(Addresses.Inviters, ABI.Inviters, provider) as Inviters,
-      tierMint: new ethers.Contract(Addresses.TierMint, ABI.TierMint, provider) as TierMint,
-      buyer: new ethers.Contract(Addresses.Buyer, ABI.Buyer, provider) as Buyer,
+      lucky: new ethers.Contract(Addresses.Lucky, ABI.Lucky, provider) as Lucky,
+      pool: new ethers.Contract(Addresses.Pool, ABI.Pool, provider) as Pool,
+      rank: new ethers.Contract(Addresses.Rank, ABI.Rank, provider) as Rank,
     }
   }, [provider, Addresses])
 

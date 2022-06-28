@@ -1,17 +1,25 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import { useEffect, useMemo } from 'react'
+import { Link } from 'react-router-dom'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 
-import { useStores } from "@/hooks";
-import { observer } from "mobx-react-lite";
+import { useStores } from '@/hooks'
+import { observer } from 'mobx-react-lite'
 
-import styled from "styled-components";
-import Title from "../components/title";
-import { useBurn } from "@/lib/burn";
-import { useAddress } from "@/lib/address";
-import RankList from "./rankList";
+import styled from 'styled-components'
+import Title from '../components/title'
+import RankList from './rankList'
+import { useRank } from '@/lib/rank'
+import { useWallet } from '@/lib/wallet'
 export default observer(() => {
+  const { address } = useWallet()
+  const { invitedInRound, thisRound } = useRank()
+  const myRanking = useMemo(() => {
+    if (!address || !thisRound) {
+      return 0
+    }
+    return thisRound.findIndex((a) => a.user == address) + 1
+  }, [address, thisRound])
   return (
     <ViewStyled>
       <Header />
@@ -25,17 +33,17 @@ export default observer(() => {
             <div className="result_items">
               <div className="item">
                 <div className="icon">
-                  <img src={createURL("icons/icon_trophy.png")} />
+                  <img src={createURL('icons/icon_trophy.png')} />
                 </div>
                 <div className="txt">My invitations</div>
-                <div className="num">0</div>
+                <div className="num">{invitedInRound}</div>
               </div>
               <div className="item">
                 <div className="icon">
-                  <img src={createURL("icons/icon_star.png")} />
+                  <img src={createURL('icons/icon_star.png')} />
                 </div>
                 <div className="txt">My ranking</div>
-                <div className="num">0</div>
+                <div className="num">{myRanking}</div>
               </div>
             </div>
           </div>
@@ -46,20 +54,20 @@ export default observer(() => {
       </ContentStyle>
       <Footer current="rank" />
     </ViewStyled>
-  );
-});
+  )
+})
 const ViewStyled = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
-`;
+`
 const ContentStyle = styled.div`
   flex: 1;
   height: 0;
   flex-shrink: 0;
   padding: 0 0.25rem;
-  background: url(${createURL("page_bg.png")}) no-repeat center top/contain;
+  background: url(${createURL('page_bg.png')}) no-repeat center top/contain;
   overflow-y: auto;
   .results_view {
     position: relative;
@@ -69,15 +77,13 @@ const ContentStyle = styled.div`
       width: 100%;
       padding: 0 0.2rem 0.2rem;
       height: 2.2rem;
-      background: url(${createURL("rank_pool_box.png")}) no-repeat center
-        bottom/100% 100%;
+      background: url(${createURL('rank_pool_box.png')}) no-repeat center bottom/100% 100%;
     }
     .line {
       width: 100%;
       margin: 0.09rem 0;
       height: 0.07rem;
-      background: url(${createURL("line_bg.png")}) no-repeat center
-        center/contain;
+      background: url(${createURL('line_bg.png')}) no-repeat center center/contain;
     }
     .result_items {
       display: flex;
@@ -86,8 +92,7 @@ const ContentStyle = styled.div`
       height: 1.26rem;
       text-align: center;
 
-      background: url(${createURL("results_bg.png")}) no-repeat center
-        center/cover;
+      background: url(${createURL('results_bg.png')}) no-repeat center center/cover;
       .item {
         flex: 1;
         overflow: hidden;
@@ -117,6 +122,6 @@ const ContentStyle = styled.div`
   .list_view {
     margin-top: 0.4rem;
     padding-bottom: 0.66rem;
-    background: url(${createURL("home_btm_bg.png")}) no-repeat center bottom/80%;
+    background: url(${createURL('home_btm_bg.png')}) no-repeat center bottom/80%;
   }
-`;
+`

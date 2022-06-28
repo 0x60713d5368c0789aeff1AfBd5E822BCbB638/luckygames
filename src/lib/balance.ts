@@ -10,7 +10,7 @@ export const useBalance = (token: ERC20, account?: string) => {
     return toDecimal(bal)
   }
   const { data } = useSWR(account ? `${token.address}/balanceOf/${account}` : null, fetcher)
-  return data
+  return data ?? new Decimal(0)
 }
 
 export const useBnbBalance = (account?: string) => {
