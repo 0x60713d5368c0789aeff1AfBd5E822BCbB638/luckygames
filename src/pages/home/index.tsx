@@ -27,13 +27,35 @@ export default observer((props: any) => {
   const { burned, join, active, income, totalPay } = useLucky()
   const { balance: poolBalance } = usePool()
   const { approve, approved } = useApprove(fdao, Addresses.Lucky, address)
-  const balance = useBalance(fdao, address)
 
   const [loading, setLoading] = useState(false)
 
   const handleJoin = async () => {
     setLoading(true)
-    if (!approved) {
+    if (totalPay.gt(0)) {
+      if (income.lt('400')) {
+        Modal.error('conditions are not met')
+        setLoading(false)
+      } else if (!approved) {
+        approve()
+          .then(() => {
+            Modal.success('Approve success, you can join now')
+          })
+          .catch((err) => {
+            Modal.error(err)
+          })
+          .finally(() => setLoading(false))
+      } else {
+        active()
+          .then(() => {
+            Modal.success('Join success')
+          })
+          .catch((err) => {
+            Modal.error(err)
+          })
+          .finally(() => setLoading(false))
+      }
+    } else if (!approved) {
       approve()
         .then(() => {
           Modal.success('Approve success, you can join now')
@@ -75,15 +97,12 @@ export default observer((props: any) => {
             <div className="tips">
               <p>A FAIR GAME OF CONTRACT</p>
               <p>YOU MAYBE LOSE OR WIN FDAO</p>
-              <p>PLEASE ONLY USE "100FDAO" TO PLAY！</p>
+              <p>PLEASE ONLY USE "100FDAO" TO PLAY!</p>
             </div>
             <div className="btn_view">
-              <button disabled={totalPay.gt(0) || loading} onClick={handleJoin}>
+              <button disabled={loading} onClick={handleJoin}>
                 <img className="btn_join" src={createURL('btns/btn_join_now.png')} />
               </button>
-            </div>
-            <div className="tips">
-              <p>Your FDAO Balance: {balance.toFixed(2)}</p>
             </div>
           </div>
           <div className="lucky_pool_view">

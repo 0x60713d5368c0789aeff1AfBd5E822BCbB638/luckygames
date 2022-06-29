@@ -15,14 +15,24 @@ import { useRank } from '@/lib/rank'
 import { usePool } from '@/lib/pool'
 
 export default observer(() => {
+  const { income, dividends, bonus, claim, totalBonus, totalDividends, totalPay, invited } = useLucky()
+  const { totalReward } = useRank()
+  const pool = usePool()
+
+  const [loading, setLoading] = useState(false)
+
   const [seconds, setSeconds] = useState(0)
   useEffect(() => {
+    if (totalPay.eq(0) || pool.isClosed || income.gte(400)) {
+      setSeconds(0)
+      return
+    }
     const timmer = setInterval(() => {
       const now = (Date.now() / 1000) << 0
       setSeconds(86400 - (now % 86400))
     }, 1000)
     return () => clearInterval(timmer)
-  }, [])
+  }, [pool.isClosed, income, totalPay])
   const display = useMemo(() => {
     const hours = Math.floor(seconds / 3600)
     const minutes = Math.floor((seconds - hours * 3600) / 60)
@@ -33,12 +43,6 @@ export default observer(() => {
       seconds: _seconds.toString().padStart(2, '0'),
     }
   }, [seconds])
-
-  const { income, dividends, bonus, claim, totalBonus, totalDividends, totalPay } = useLucky()
-  const { totalReward } = useRank()
-  const pool = usePool()
-
-  const [loading, setLoading] = useState(false)
 
   const handleLuckyClaim = () => {
     setLoading(true)
@@ -127,7 +131,7 @@ export default observer(() => {
             <div className="card_content">
               <div className="list_view list_bg">
                 <div className="list_item">
-                  <label>Champion income</label>
+                  <label>Total 1st prize</label>
                   <div className="value">
                     <span className="val_num">{totalReward.toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
@@ -156,7 +160,7 @@ export default observer(() => {
             <div className="card_content">
               <div className="list_view list_bg">
                 <div className="list_item">
-                  <label>Lucky income</label>
+                  <label>Projected lucky prize</label>
                   <div className="value">
                     <span className="val_num">{pool.income.toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
@@ -203,6 +207,13 @@ export default observer(() => {
                   <div className="value">
                     <span className="val_num">{totalPay.toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
+                  </div>
+                </div>
+                <div className="list_item">
+                  <label>Total invitations</label>
+                  <div className="value">
+                    <span className="val_num">{invited}</span>
+                    <span className="val_unit">USER</span>
                   </div>
                 </div>
               </div>

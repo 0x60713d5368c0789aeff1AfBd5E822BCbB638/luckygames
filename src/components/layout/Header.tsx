@@ -1,26 +1,27 @@
-import styled from "styled-components";
-import { useStores } from "@/hooks/index";
-import { observer } from "mobx-react-lite";
-import { useWallet } from "@/lib/wallet";
-import { useBnbBalance } from "@/lib/balance";
+import styled from 'styled-components'
+import { useStores } from '@/hooks/index'
+import { observer } from 'mobx-react-lite'
+import { useWallet } from '@/lib/wallet'
+import { useBalance } from '@/lib/balance'
 
 export default observer(() => {
-  const { connect, address } = useWallet();
-  const balance = useBnbBalance(address);
+  const {
+    Contracts: { fdao },
+    connect,
+    address,
+  } = useWallet()
+  const balance = useBalance(fdao, address)
   return (
     <HeaderStyled>
       <div className="header_container">
         <div className="header_left">
           <div className="header_coin">
-            <img
-              className="fomo_icon"
-              src={createURL("icons/icon_coin_fomo.png")}
-            />
+            <img className="fomo_icon" src={createURL('icons/icon_coin_fomo.png')} />
             <div className="header_fomo_num">{balance.toDP(4).toString()}</div>
           </div>
         </div>
         <div className="header_logo">
-          <img src={createURL("logo.png")} />
+          <img src={createURL('logo.png')} />
         </div>
         <div className="header_right">
           {address ? (
@@ -33,8 +34,8 @@ export default observer(() => {
         </div>
       </div>
     </HeaderStyled>
-  );
-});
+  )
+})
 
 const HeaderStyled = styled.div`
   width: 100%;
@@ -44,7 +45,7 @@ const HeaderStyled = styled.div`
     padding: 0 0.15rem;
     height: 0.56rem;
     display: flex;
-    background: url(${createURL("header_bg.png")}) no-repeat center/cover;
+    background: url(${createURL('header_bg.png')}) no-repeat center/cover;
   }
   .header_left,
   .header_right {
@@ -81,8 +82,7 @@ const HeaderStyled = styled.div`
       white-space: nowrap;
       background-clip: padding-box, border-box;
       background-origin: padding-box, border-box;
-      background-image: linear-gradient(to right, #222, #222),
-        linear-gradient(90deg, #732aff, #d627fd);
+      background-image: linear-gradient(to right, #222, #222), linear-gradient(90deg, #732aff, #d627fd);
     }
   }
   .header_right {
@@ -100,8 +100,7 @@ const HeaderStyled = styled.div`
       white-space: nowrap;
       background-clip: padding-box, border-box;
       background-origin: padding-box, border-box;
-      background-image: linear-gradient(to right, #222, #222),
-        linear-gradient(90deg, #732aff, #d627fd);
+      background-image: linear-gradient(to right, #222, #222), linear-gradient(90deg, #732aff, #d627fd);
     }
   }
   .header_logo {
@@ -114,4 +113,4 @@ const HeaderStyled = styled.div`
       object-fit: contain;
     }
   }
-`;
+`

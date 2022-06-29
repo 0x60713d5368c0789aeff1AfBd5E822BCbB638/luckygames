@@ -13,12 +13,12 @@ export const useBalance = (token: ERC20, account?: string) => {
   return data ?? new Decimal(0)
 }
 
-export const useBnbBalance = (account?: string) => {
-  const { provider } = useWallet()
-  const fetcher = async () => {
-    const bal = await provider.getBalance(account ?? '')
-    return toDecimal(bal)
-  }
-  const { data } = useSWR(account ? `getBalance/${account}` : null, fetcher)
-  return data ?? new Decimal(0)
-}
+// export const useBnbBalance = (account?: string) => {
+//   const { provider } = useWallet()
+//   const fetcher = async () => {
+//     const bal = await provider.getBalance(account ?? '')
+//     return toDecimal(bal)
+//   }
+//   const { data } = useSWR(account ? `getBalance/${account}` : null, fetcher)
+//   return data ?? new Decimal(0)
+// }

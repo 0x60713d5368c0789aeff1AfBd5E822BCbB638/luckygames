@@ -1,9 +1,7 @@
 import { useEffect, useMemo } from 'react'
-import { Link } from 'react-router-dom'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
-import { useStores } from '@/hooks'
 import { observer } from 'mobx-react-lite'
 
 import styled from 'styled-components'

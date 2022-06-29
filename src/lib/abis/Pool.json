@@ -71,7 +71,7 @@
         },
         {
           "internalType": "uint256",
-          "name": "count",
+          "name": "estimateBonus",
           "type": "uint256"
         }
       ],

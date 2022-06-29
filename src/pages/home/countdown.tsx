@@ -4,15 +4,21 @@ import { useStores } from '@/hooks'
 import { observer } from 'mobx-react-lite'
 
 import styled from 'styled-components'
+import { usePool } from '@/lib/pool'
 export default observer((props: any) => {
+  const { isClosed } = usePool()
   const [seconds, setSeconds] = useState(0)
   useEffect(() => {
+    if (isClosed) {
+      setSeconds(0)
+      return
+    }
     const timmer = setInterval(() => {
       const now = (Date.now() / 1000) << 0
       setSeconds(86400 - (now % 86400))
     }, 1000)
     return () => clearInterval(timmer)
-  }, [])
+  }, [isClosed])
   const getSingleNum = (numStr: string, index: number) => {
     if (index > 0) {
       return numStr.substring(index)

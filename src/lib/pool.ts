@@ -20,7 +20,7 @@ export const usePool = () => {
     const resp = await pool.status(address ?? ethers.constants.AddressZero)
     return {
       balance: toDecimal(resp.balance),
-      income: resp.pos.toNumber() > 0 ? toDecimal(resp.balance).div(resp.count.toString()) : new Decimal(0),
+      income: resp.pos.toNumber() > 0 ? toDecimal(resp.estimateBonus) : new Decimal(0),
       isClosed: resp.isClosed,
     }
   }

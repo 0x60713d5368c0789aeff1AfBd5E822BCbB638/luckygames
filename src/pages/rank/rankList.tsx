@@ -31,7 +31,7 @@ export default observer(() => {
             <div className="rank_list">
               <div className="list_title">
                 <div>Ranking</div>
-                <div>Number</div>
+                <div>Inv</div>
                 <div className="ad">Address</div>
               </div>
               <div className="list_body">
@@ -69,7 +69,7 @@ export default observer(() => {
             <div className="rank_list">
               <div className="list_title">
                 <div>Ranking</div>
-                <div>Number</div>
+                <div>Inv</div>
                 <div className="ad">Address</div>
               </div>
               <div className="list_body">

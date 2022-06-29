@@ -3,9 +3,9 @@ import { useWallet } from './wallet'
 // EDIT
 export const AddressesMainnet = {
   Fdao: '0xa56E678acE0a15Beb98C493DbB4eC626d58b8F1E',
-  Lucky: '0xcBd7e6EbCadB0f270fff2E05695D6F6A22fCBAae',
-  Pool: '0x4A5C359C8beecE72B682fE21D1547dde63A08132',
-  Rank: '0x6CFb42393bFEbE6E7Bbae305de0F8658F7e26052',
+  Lucky: '0x73Ff620fD6DaCD45E46243762B3DCe7a9d343b37',
+  Pool: '0x0d83F787F258621C339c371503B5aee70367A437',
+  Rank: '0x08C908457030d058Dc489610fe5c8c7C9CacED98',
 }
 
 export const AddressesTestnet = {

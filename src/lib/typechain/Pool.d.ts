@@ -28,7 +28,7 @@ export class Pool extends BaseContract {
       pos: BigNumber
       balance: BigNumber
       isClosed: boolean
-      count: BigNumber
+      estimateBonus: BigNumber
     }
   >
 
