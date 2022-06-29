@@ -17,7 +17,7 @@ export default observer(() => {
         <div className="header_left">
           <div className="header_coin">
             <img className="fomo_icon" src={createURL('icons/icon_coin_fomo.png')} />
-            <div className="header_fomo_num">{balance.toDP(4).toString()}</div>
+            <div className="header_fomo_num">{balance.toDP(0, 1).toString()}</div>
           </div>
         </div>
         <div className="header_logo">
