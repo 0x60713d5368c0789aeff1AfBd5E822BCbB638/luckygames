@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
-import { useStores } from '@/hooks'
 import { observer } from 'mobx-react-lite'
 
 import styled from 'styled-components'
 import { usePool } from '@/lib/pool'
+import { Params } from '@/lib/address'
 export default observer((props: any) => {
   const { isClosed } = usePool()
   const [seconds, setSeconds] = useState(0)
@@ -15,7 +15,7 @@ export default observer((props: any) => {
     }
     const timmer = setInterval(() => {
       const now = (Date.now() / 1000) << 0
-      setSeconds(86400 - (now % 86400))
+      setSeconds(Params.rankCD - (now % Params.rankCD))
     }, 1000)
     return () => clearInterval(timmer)
   }, [isClosed])

@@ -111,7 +111,7 @@ export default observer((props: any) => {
                 <Title style={{ fontSize: '0.2rem' }}>Lucky Pool</Title>
                 <div className="item_pd">
                   <div className="item_num_box">
-                    <div className="num">{poolBalance.toFixed(4)}</div>
+                    <div className="num">{poolBalance.toFixed(2)}</div>
                     <div className="unit">FDAO</div>
                   </div>
                 </div>
@@ -120,7 +120,7 @@ export default observer((props: any) => {
                 <Title style={{ fontSize: '0.2rem' }}>Burned FDAO</Title>
                 <div className="item_pd">
                   <div className="item_num_box">
-                    <div className="num">{burned.toFixed(4)}</div>
+                    <div className="num">{burned.toFixed(2)}</div>
                     <div className="unit">FDAO</div>
                   </div>
                 </div>

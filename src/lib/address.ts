@@ -1,11 +1,19 @@
 import { useWallet } from './wallet'
 
 // EDIT
+
+export const Params = {
+  // CD: 86400,
+  // rankCD: 86400,
+  CD: 120,
+  rankCD: 1800,
+}
+
 export const AddressesMainnet = {
   Fdao: '0xa56E678acE0a15Beb98C493DbB4eC626d58b8F1E',
-  Lucky: '0x73Ff620fD6DaCD45E46243762B3DCe7a9d343b37',
-  Pool: '0x0d83F787F258621C339c371503B5aee70367A437',
-  Rank: '0x08C908457030d058Dc489610fe5c8c7C9CacED98',
+  Lucky: '0xD82DfA646E1AC85fd5052CF5A04aE1d43149Ba56',
+  Pool: '0x69Ea72460D68a0FB14b12cDf7976087E8603F3e3',
+  Rank: '0x654B91c7F9216FAA91F7abF10dd4AC797B4E5179',
 }
 
 export const AddressesTestnet = {

@@ -1,6 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import copy from 'copy-to-clipboard'
-import { useLocation } from 'react-router-dom'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
@@ -9,10 +7,10 @@ import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import Title from '../components/title'
 import Modal from '@/components/ui/Modal'
-import { useWallet } from '@/lib/wallet'
 import { useLucky } from '@/lib/lucky'
 import { useRank } from '@/lib/rank'
 import { usePool } from '@/lib/pool'
+import { Params } from '@/lib/address'
 
 export default observer(() => {
   const { income, dividends, bonus, claim, totalBonus, totalDividends, totalPay, invited } = useLucky()
@@ -29,7 +27,7 @@ export default observer(() => {
     }
     const timmer = setInterval(() => {
       const now = (Date.now() / 1000) << 0
-      setSeconds(86400 - (now % 86400))
+      setSeconds(Params.CD - (now % Params.CD))
     }, 1000)
     return () => clearInterval(timmer)
   }, [pool.isClosed, income, totalPay])
@@ -50,7 +48,9 @@ export default observer(() => {
       .then(() => {
         Modal.success('Claim success')
       })
-      .catch(Modal.error)
+      .catch((err) => {
+        Modal.error(err)
+      })
       .finally(() => setLoading(false))
   }
 
@@ -61,7 +61,9 @@ export default observer(() => {
       .then(() => {
         Modal.success('Claim success')
       })
-      .catch(Modal.error)
+      .catch((err) => {
+        Modal.error(err)
+      })
       .finally(() => setLoading(false))
   }
   return (
@@ -97,21 +99,21 @@ export default observer(() => {
                 <div className="list_item">
                   <label>Withdrawable dividends</label>
                   <div className="value">
-                    <span className="val_num">{dividends.toFixed(2)}</span>
+                    <span className="val_num">{pool.isClosed ? '0.00' : dividends.toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
                   </div>
                 </div>
                 <div className="list_item">
                   <label>Withdrawable bonus</label>
                   <div className="value">
-                    <span className="val_num">{bonus.toFixed(2)}</span>
+                    <span className="val_num">{pool.isClosed ? '0.00' : bonus.toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
                   </div>
                 </div>
                 <div className="list_item">
                   <label>Total withdrawable </label>
                   <div className="value">
-                    <span className="val_num">{dividends.add(bonus).toFixed(2)}</span>
+                    <span className="val_num">{pool.isClosed ? '0.00' : dividends.add(bonus).toFixed(2)}</span>
                     <span className="val_unit">FDAO</span>
                   </div>
                 </div>

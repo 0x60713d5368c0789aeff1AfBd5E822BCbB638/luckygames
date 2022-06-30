@@ -63,7 +63,7 @@ export const useLucky = () => {
     if (!signer) await connect()
     if (!signer) return Promise.reject('no wallet')
     const writeable = lucky.connect(signer)
-    const tx = await writeable.harvest().catch(getErrorMsg)
+    const tx = await writeable.harvest({ gasLimit: 200000 }).catch(getErrorMsg)
     const receipt = await tx.wait()
     mutate()
     globalMutate(`${Addresses.Fdao}/balanceOf/${address}`)
