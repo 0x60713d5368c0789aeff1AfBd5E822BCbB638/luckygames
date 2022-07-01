@@ -2,7 +2,7 @@ import Home from "./home";
 import Rank from "./rank";
 
 import Claim from "./claim";
-
+import Invitees from "./invitees";
 
 export default [
   {
@@ -19,5 +19,10 @@ export default [
     path: "/claim",
     exact: true,
     component: Claim,
+  },
+  {
+    path: "/invitees",
+    exact: true,
+    component: Invitees,
   },
 ];
