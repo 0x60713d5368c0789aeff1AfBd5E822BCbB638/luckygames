@@ -9,7 +9,7 @@ const revertPrefix = 'VM Exception while processing transaction: revert '
 const reasonPrefix = 'Error: VM Exception while processing transaction: reverted with custom error'
 const reasonPrefix2 = 'Error: VM Exception while processing transaction: reverted with reason string'
 export const getErrorMsg = (err: any) => {
-  if (err?.reason) {
+  if (typeof err?.reason == 'string') {
     const msg = err.reason
     if (msg.startsWith(reasonPrefix)) {
       throw 'Error: ' + msg.slice(reasonPrefix.length)
@@ -26,6 +26,6 @@ export const getErrorMsg = (err: any) => {
     }
     throw msg
   }
-  const msg = err?.message ?? err?.data?.message ?? err?.toString() ?? ('unknown error' as string)
+  const msg: string = err?.message?.toString() ?? err?.data?.message?.toString() ?? err?.toString() ?? ('unknown error' as string)
   throw msg.length > 100 ? 'error' : msg
 }

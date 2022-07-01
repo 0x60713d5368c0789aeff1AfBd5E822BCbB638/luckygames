@@ -23,7 +23,7 @@ export const useApprove = (token: ERC20, spender: string, owner?: string) => {
     if (!signer) return Promise.reject('wallet not connected')
     const writeable = token.connect(signer)
     const tx = await writeable.approve(spender, ethers.constants.MaxUint256).catch(getErrorMsg)
-    const receipt = await tx.wait()
+    const receipt = await tx.wait().catch(getErrorMsg)
     mutate()
     return receipt
   }

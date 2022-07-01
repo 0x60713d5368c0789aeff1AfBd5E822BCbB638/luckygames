@@ -32,7 +32,7 @@ export const usePool = () => {
     if (!signer) return Promise.reject('no wallet')
     const writeable = pool.connect(signer)
     const tx = await writeable.claim().catch(getErrorMsg)
-    const receipt = await tx.wait()
+    const receipt = await tx.wait().catch(getErrorMsg)
     mutate()
     globalMutate(`${Addresses.Fdao}/balanceOf/${address}`)
     return receipt
