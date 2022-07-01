@@ -12,6 +12,8 @@ export class Lucky extends BaseContract {
 
   active(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>
 
+  getInvitedUsers(account: string, page: BigNumberish, overrides?: CallOverrides): Promise<string[]>
+
   harvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>
 
   initialize(

@@ -1,137 +1,161 @@
 [
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "uint8",
-          "name": "version",
-          "type": "uint8"
-        }
-      ],
-      "name": "Initialized",
-      "type": "event"
-    },
-    {
-      "inputs": [],
-      "name": "active",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "harvest",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "contract IERC20",
-          "name": "_fdao",
-          "type": "address"
-        },
-        {
-          "internalType": "contract ILucky100Pool",
-          "name": "_pool",
-          "type": "address"
-        },
-        {
-          "internalType": "contract ILucky100Rank",
-          "name": "_rank",
-          "type": "address"
-        }
-      ],
-      "name": "initialize",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "join",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "user",
-          "type": "address"
-        }
-      ],
-      "name": "status",
-      "outputs": [
-        {
-          "components": [
-            {
-              "components": [
-                {
-                  "internalType": "uint256",
-                  "name": "lastDay",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "income",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "dividends",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "bonus",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "totalDividends",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "totalBonus",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "totalPay",
-                  "type": "uint256"
-                }
-              ],
-              "internalType": "struct Lucky100.UserInfo",
-              "name": "info",
-              "type": "tuple"
-            },
-            {
-              "internalType": "uint256",
-              "name": "invited",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "burned",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "balance",
-              "type": "uint256"
-            }
-          ],
-          "internalType": "struct Lucky100.Status",
-          "name": "",
-          "type": "tuple"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ]
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "version",
+        "type": "uint8"
+      }
+    ],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "active",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "page",
+        "type": "uint256"
+      }
+    ],
+    "name": "getInvitedUsers",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "harvest",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "_fdao",
+        "type": "address"
+      },
+      {
+        "internalType": "contract ILucky100Pool",
+        "name": "_pool",
+        "type": "address"
+      },
+      {
+        "internalType": "contract ILucky100Rank",
+        "name": "_rank",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "join",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "status",
+    "outputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "lastDay",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "income",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "dividends",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bonus",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "totalDividends",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "totalBonus",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "totalPay",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Lucky100.UserInfo",
+            "name": "info",
+            "type": "tuple"
+          },
+          {
+            "internalType": "uint256",
+            "name": "invited",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "burned",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "balance",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Lucky100.Status",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

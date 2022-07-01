@@ -11,6 +11,7 @@ import { useLucky } from '@/lib/lucky'
 import { useRank } from '@/lib/rank'
 import { usePool } from '@/lib/pool'
 import { Params } from '@/lib/address'
+import { useInvited } from '@/lib/invited'
 
 export default observer(() => {
   const { income, dividends, bonus, claim, totalBonus, totalDividends, totalPay, invited } = useLucky()
@@ -66,6 +67,9 @@ export default observer(() => {
       })
       .finally(() => setLoading(false))
   }
+
+  const invitedUsers = useInvited(0) // page starts with 0, pageSize = 20
+
   return (
     <ViewStyled>
       <Header />

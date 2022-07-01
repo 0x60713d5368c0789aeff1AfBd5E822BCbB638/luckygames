@@ -5,8 +5,10 @@ import { useWallet } from './wallet'
 export const Params = {
   // CD: 86400,
   // rankCD: 86400,
+  // rankOffset: 50400,
   CD: 120,
   rankCD: 1800,
+  rankOffset: 0,
 }
 
 export const AddressesMainnet = {
