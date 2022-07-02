@@ -1,62 +1,59 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode } from "swiper";
-import { observer } from "mobx-react-lite";
-import Modal from "@/components/ui/Modal";
-import styled from "styled-components";
-import copy from "copy-to-clipboard";
-import { useInvited } from "@/lib/invited";
+import { useEffect, useMemo, useRef, useState } from 'react'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { FreeMode } from 'swiper'
+import { observer } from 'mobx-react-lite'
+import Modal from '@/components/ui/Modal'
+import styled from 'styled-components'
+import copy from 'copy-to-clipboard'
+import { useInvited } from '@/lib/invited'
 export default observer(() => {
-  const [invitedList, setList] = useState<string[]>([]);
-  const [page, setPage] = useState(0);
-  const [nextDisabled, setNextDisabled] = useState(false);
-  const swiperRef = useRef<any>();
+  const [invitedList, setList] = useState<string[]>([])
+  const [page, setPage] = useState(0)
+  const [nextDisabled, setNextDisabled] = useState(false)
+  const swiperRef = useRef<any>()
+
   useEffect(() => {
-    // loadInvited(0);
-  }, []);
+    swiperRef.current.update()
+  }, [invitedList.length])
+
+  const invitedUsers = useInvited(page)
+
   useEffect(() => {
-    // loadInvited(page);
-  }, [page]);
-  useEffect(() => {
-    swiperRef.current.update();
-  }, [invitedList.length]);
-  const loadInvited = (page: number) => {
-    const invitedUsers = useInvited(page);
     if (invitedUsers.length == 0) {
-      setNextDisabled(true);
-      return false;
+      setNextDisabled(true)
+      return
     }
-    let tempList = [...invitedList, ...invitedUsers];
-    setList(tempList);
-  };
+    let tempList = [...invitedList, ...invitedUsers]
+    setList(tempList)
+  }, [invitedUsers])
 
   const formatAddress = (a: string) => {
-    return `${a.slice(0, 6)}..${a.slice(38)}`;
-  };
+    return `${a.slice(0, 6)}..${a.slice(38)}`
+  }
   const copyAddress = (text: string) => {
-    copy(text);
-    Modal.success("copy success");
-  };
+    copy(text)
+    Modal.success('copy success')
+  }
   return (
     <ViewStyled>
       <Header />
       <ContentStyle>
         <Swiper
           className="swiper_view"
-          slidesPerView={"auto"}
+          slidesPerView={'auto'}
           modules={[FreeMode]}
           freeMode={true}
-          direction={"vertical"}
+          direction={'vertical'}
           setWrapperSize={true}
           onSwiper={(swiper) => {
-            swiperRef.current = swiper;
+            swiperRef.current = swiper
           }}
           onMomentumBounce={(swiper) => {
             if (swiper.translate < -100) {
               if (!nextDisabled) {
-                setPage(page + 1);
+                setPage(page + 1)
               }
             }
           }}
@@ -68,36 +65,34 @@ export default observer(() => {
                 <div
                   className="copy_btn"
                   onClick={() => {
-                    copyAddress(e);
+                    copyAddress(e)
                   }}
                 >
                   COPY
                 </div>
               </SwiperSlide>
-            );
+            )
           })}
           <div className="wrapper_end" slot="wrapper-end">
-            {invitedList.length > 0 && (
-              <> {nextDisabled ? "没有更多了" : "加载更多"}</>
-            )}
+            {invitedList.length > 0 && <> {nextDisabled ? 'no more' : 'load more'}</>}
           </div>
         </Swiper>
       </ContentStyle>
       <Footer current="claim" />
     </ViewStyled>
-  );
-});
+  )
+})
 const ViewStyled = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
-`;
+`
 const ContentStyle = styled.div`
   flex: 1;
   height: 100%;
   flex-shrink: 0;
-  background: url(${createURL("page_bg.png")}) no-repeat center top/contain;
+  background: url(${createURL('page_bg.png')}) no-repeat center top/contain;
   overflow-y: auto;
   .swiper_view {
     padding: 0.2rem 0.25rem;
@@ -131,4 +126,4 @@ const ContentStyle = styled.div`
     text-align: center;
     font-size: 0.12rem;
   }
-`;
+`
