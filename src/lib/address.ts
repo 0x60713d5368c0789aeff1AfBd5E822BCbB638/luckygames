@@ -13,9 +13,9 @@ export const Params = {
 
 export const AddressesMainnet = {
   Fdao: '0xa56E678acE0a15Beb98C493DbB4eC626d58b8F1E',
-  Lucky: '0x64b6F0bd9411f8DC0790F75d0ddD6Db3557D8f9f',
-  Pool: '0x5F0c44393f193525cBF6e33fFDe3266d16F90Caf',
-  Rank: '0x4eA04D62379D1DA8F513270dE2b7AE17186aA70d',
+  Lucky: '0xF6B1Cc75873E399C5887D3cfE7908264B822f7Db',
+  Pool: '0x9f5DDDd775458a2E045BA8E783AD25682e2E37eb',
+  Rank: '0x53C0eB6eCd7Ee2AA2552C29E93f4a5f723d4Bf59',
 }
 
 export const AddressesTestnet = {
