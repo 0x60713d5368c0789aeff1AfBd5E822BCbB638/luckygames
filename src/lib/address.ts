@@ -3,19 +3,26 @@ import { useWallet } from './wallet'
 // EDIT
 
 export const Params = {
-  // CD: 86400,
-  // rankCD: 86400,
-  // rankOffset: 50400,
-  CD: 120,
-  rankCD: 1800,
-  rankOffset: 0,
+  CD: 86400,
+  rankCD: 86400,
+  rankOffset: 50400,
+  // CD: 120,
+  // rankCD: 1800,
+  // rankOffset: 0,
 }
 
+// export const AddressesMainnet = {
+//   Fdao: '0xa56E678acE0a15Beb98C493DbB4eC626d58b8F1E',
+//   Lucky: '0xd794D155c7f65CF48572B63841F54951315010B8',
+//   Pool: '0xe828a1F472361Dc93742ece3246eF7905526F07a',
+//   Rank: '0xa3a8C8f9Eb627379cc9c07552A153Bc6a2C8B0fc',
+// }
+
 export const AddressesMainnet = {
-  Fdao: '0xa56E678acE0a15Beb98C493DbB4eC626d58b8F1E',
-  Lucky: '0xd794D155c7f65CF48572B63841F54951315010B8',
-  Pool: '0xe828a1F472361Dc93742ece3246eF7905526F07a',
-  Rank: '0xa3a8C8f9Eb627379cc9c07552A153Bc6a2C8B0fc',
+  Fdao: '0x7371f453a20B18D21c9D0DabE822BC417408aB02',
+  Lucky: '0xeFa24A2430bdBc2389456A0c6b79793ae39a820F',
+  Pool: '0xA937544eF400d2b8595aA24F9fAbDFd78D717220',
+  Rank: '0x63CC97fEa84b5ee7011EEc243099C1863789C74E',
 }
 
 export const AddressesTestnet = {
