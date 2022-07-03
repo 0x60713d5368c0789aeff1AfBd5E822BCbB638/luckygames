@@ -15,7 +15,7 @@ export default observer((props: any) => {
     }
     const timmer = setInterval(() => {
       const now = (Date.now() / 1000) << 0
-      setSeconds(Params.rankCD - ((now - Params.rankOffset) % Params.rankCD))
+      setSeconds(Params.rankCD - ((now - Params.offset) % Params.rankCD))
     }, 1000)
     return () => clearInterval(timmer)
   }, [isClosed])
