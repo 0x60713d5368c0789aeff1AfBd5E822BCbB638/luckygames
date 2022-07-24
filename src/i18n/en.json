@@ -1,0 +1,57 @@
+{
+  "header": {
+    "connect": "Connect"
+  },
+  "home": {
+    "rank": "Ranking Pool",
+    "intro_1": "A FAIR GAME OF CONTRACT",
+    "intro_2": "YOU MAYBE LOSE OR WIN FDAO",
+    "intro_3": "PLEASE ONLY USE \"100FDAO\" TO PLAY!",
+    "luck": "Lucky Pool",
+    "burned": "Burned FDAO",
+    "joinBtn": "JOIN NOW!",
+    "join": "JOIN"
+  },
+  "rank": {
+    "rank": "RANK",
+    "results": "Results of this round",
+    "invitations": "My invitations",
+    "myRanking": "My ranking",
+    "thisRound": "This round",
+    "lastRound": "Last round",
+    "ranking": "Ranking",
+    "inv": "Inv",
+    "address": "Address",
+    "lastBtn": "VIEW LAST ROUND",
+    "thisBtn": "VIEW THIS ROUND"
+  },
+  "claim": {
+    "claim": "CLAIM",
+    "claimBtn": "Claim",
+    "inviteesBtn": "View invitees",
+    "myIncome": "My income",
+    "countdown": "Countdown",
+    "maxProfit": "Round of max profit",
+    "revenue": "Generated revenue",
+    "dividends": "Withdrawable dividends",
+    "bonus": "Withdrawable bonus",
+    "tWithdrawable": "Total withdrawable",
+    "myRank": "My rank prize",
+    "total": "Total 1st prize",
+    "myLucky": "My lucky prize",
+    "projectedLucky": "Projected lucky prize",
+    "withdrawable": "Withdrawable",
+    "myData": "My data",
+    "tDividends": "Total dividends",
+    "tBonus": "Total bonus",
+    "tJoin": "Total joinFDAO",
+    "tInvitations": "Total invitations",
+    "copy": "COPY"
+  },
+
+  "tips": {
+    "conditions": "conditions are not met",
+    "approve": "Approve success, you can join now",
+    "joinSuccess": "Join success"
+  }
+}

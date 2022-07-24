@@ -1,41 +1,50 @@
-import styled from 'styled-components'
-import { useStores } from '@/hooks/index'
-import { observer } from 'mobx-react-lite'
-import { useWallet } from '@/lib/wallet'
-import { useBalance } from '@/lib/balance'
+import styled from "styled-components";
+import { useStores } from "@/hooks/index";
+import { observer } from "mobx-react-lite";
+import { useWallet } from "@/lib/wallet";
+import { useBalance } from "@/lib/balance";
+import { withTranslation } from "react-i18next";
 
-export default observer(() => {
-  const {
-    Contracts: { fdao },
-    connect,
-    address,
-  } = useWallet()
-  const balance = useBalance(fdao, address)
-  return (
-    <HeaderStyled>
-      <div className="header_container">
-        <div className="header_left">
-          <div className="header_coin">
-            <img className="fomo_icon" src={createURL('icons/icon_coin_fomo.png')} />
-            <div className="header_fomo_num">{balance.toDP(0, 1).toString()}</div>
+export default withTranslation()(
+  observer((props: any) => {
+    const {
+      Contracts: { fdao },
+      connect,
+      address,
+    } = useWallet();
+    const { t } = props;
+    const balance = useBalance(fdao, address);
+    return (
+      <HeaderStyled>
+        <div className="header_container">
+          <div className="header_left">
+            <div className="header_coin">
+              <img
+                className="fomo_icon"
+                src={createURL("icons/icon_coin_fomo.png")}
+              />
+              <div className="header_fomo_num">
+                {balance.toDP(0, 1).toString()}
+              </div>
+            </div>
+          </div>
+          <div className="header_logo">
+            <img src={createURL("logo.png")} />
+          </div>
+          <div className="header_right">
+            {address ? (
+              <div className="right_btn">{address}</div>
+            ) : (
+              <div className="right_btn" onClick={() => connect()}>
+                {t("header.connect")}
+              </div>
+            )}
           </div>
         </div>
-        <div className="header_logo">
-          <img src={createURL('logo.png')} />
-        </div>
-        <div className="header_right">
-          {address ? (
-            <div className="right_btn">{address}</div>
-          ) : (
-            <div className="right_btn" onClick={() => connect()}>
-              Connect
-            </div>
-          )}
-        </div>
-      </div>
-    </HeaderStyled>
-  )
-})
+      </HeaderStyled>
+    );
+  })
+);
 
 const HeaderStyled = styled.div`
   width: 100%;
@@ -45,7 +54,7 @@ const HeaderStyled = styled.div`
     padding: 0 0.15rem;
     height: 0.56rem;
     display: flex;
-    background: url(${createURL('header_bg.png')}) no-repeat center/cover;
+    background: url(${createURL("header_bg.png")}) no-repeat center/cover;
   }
   .header_left,
   .header_right {
@@ -82,7 +91,8 @@ const HeaderStyled = styled.div`
       white-space: nowrap;
       background-clip: padding-box, border-box;
       background-origin: padding-box, border-box;
-      background-image: linear-gradient(to right, #222, #222), linear-gradient(90deg, #732aff, #d627fd);
+      background-image: linear-gradient(to right, #222, #222),
+        linear-gradient(90deg, #732aff, #d627fd);
     }
   }
   .header_right {
@@ -100,7 +110,8 @@ const HeaderStyled = styled.div`
       white-space: nowrap;
       background-clip: padding-box, border-box;
       background-origin: padding-box, border-box;
-      background-image: linear-gradient(to right, #222, #222), linear-gradient(90deg, #732aff, #d627fd);
+      background-image: linear-gradient(to right, #222, #222),
+        linear-gradient(90deg, #732aff, #d627fd);
     }
   }
   .header_logo {
@@ -113,4 +124,4 @@ const HeaderStyled = styled.div`
       object-fit: contain;
     }
   }
-`
+`;

@@ -1,0 +1,57 @@
+{
+  "header": {
+    "connect": "关联钱包"
+  },
+  "home": {
+    "rank": "排名池",
+    "intro_1": "一场公平的合约游戏",
+    "intro_2": "您可能会失去或赢得FDAO",
+    "intro_3": "请只使用“100FDAO”来玩！",
+    "luck": "幸运池",
+    "burned": "烧毁的FDAO",
+    "joinBtn": "立即加入",
+    "join": "加入"
+  },
+  "rank": {
+    "rank": "排名",
+    "results": "本轮结果",
+    "invitations": "我的邀请",
+    "myRanking": "我的排名",
+    "thisRound": "这一轮",
+    "lastRound": "上一轮",
+    "ranking": "排名",
+    "inv": "Inv",
+    "address": "地址",
+    "lastBtn": "查看上一轮",
+    "thisBtn": "查看这一轮"
+  },
+  "claim": {
+    "claim": "索取",
+    "claimBtn": "索取",
+    "inviteesBtn": "查看受邀者",
+    "myIncome": "我的收入",
+    "countdown": "倒计时",
+    "maxProfit": "一轮最大利润",
+    "revenue": "产生的收入",
+    "dividends": "可提取股息",
+    "bonus": "可提取红利",
+    "tWithdrawable": "总提取",
+    "myRank": "我的等级奖",
+    "total": "总一等奖",
+    "myLucky": "我的幸运奖",
+    "projectedLucky": "预计幸运奖",
+    "withdrawable": "可提取",
+    "myData": "我的数据",
+    "tDividends": "股息总额",
+    "tBonus": "总奖金",
+    "tJoin": "总加入FDAO",
+    "tInvitations": "总邀请",
+    "copy": "复制"
+  },
+
+  "tips": {
+    "conditions": "不满足条件",
+    "approve": "批准成功，您可以立即加入",
+    "joinSuccess": "加入成功"
+  }
+}

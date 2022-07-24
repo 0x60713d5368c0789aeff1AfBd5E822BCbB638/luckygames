@@ -1,0 +1,57 @@
+{
+  "header": {
+    "connect": "Relier"
+  },
+  "home": {
+    "rank": "Bassin de classement",
+    "intro_1": "UN JEU DE CONTRAT ÉQUITABLE",
+    "intro_2": "VOUS PEUT-ÊTRE PERDRE OU GAGNER FDAO",
+    "intro_3": "VEUILLEZ UTILISER UNIQUEMENT \"100FDAO\" POUR JOUER !",
+    "luck": "Piscine chanceuse",
+    "burned": "FDAO brûlé",
+    "joinBtn": "ADHÉRER MAINTENANT!",
+    "join": "REJOINDRE"
+  },
+  "rank": {
+    "rank": "RANG",
+    "results": "Résultats de ce tour",
+    "invitations": "Mes invitations",
+    "myRanking": "Mon classement",
+    "thisRound": "Ce tour",
+    "lastRound": "Dernier tour",
+    "ranking": "Classement",
+    "inv": "Inv",
+    "address": "Adresse",
+    "lastBtn": "VOIR LE DERNIER TOUR",
+    "thisBtn": "VOIR CE TOUR"
+  },
+  "claim": {
+    "claim": "RÉCLAMER",
+    "claimBtn": "Réclamer",
+    "inviteesBtn": "Afficher les invités",
+    "myIncome": "Mes revenus",
+    "countdown": "Compte à rebours",
+    "maxProfit": "Tour de profit maximum",
+    "revenue": "Revenus générés",
+    "dividends": "Dividendes remboursables",
+    "bonus": "Bonus retirable",
+    "tWithdrawable": "Total retirable",
+    "myRank": "Mon prix de classement",
+    "total": "Total 1er prix",
+    "myLucky": "Mon lot de chance",
+    "projectedLucky": "Lot chanceux projeté",
+    "withdrawable": "Amovible",
+    "myData": "Mes données",
+    "tDividends": "Dividendes totaux",
+    "tBonus": "Prime totale",
+    "tJoin": "FDAO jointure totale",
+    "tInvitations": "Nombre total d'invitations",
+    "copy": "COPIE"
+  },
+
+  "tips": {
+    "conditions": "les conditions ne sont pas remplies",
+    "approve": "Approuvez le succès, vous pouvez rejoindre maintenant",
+    "joinSuccess": "Rejoignez le succès"
+  }
+}

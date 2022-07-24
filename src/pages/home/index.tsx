@@ -1,151 +1,157 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from "react";
 
-import { Link } from 'react-router-dom'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
+import { Link } from "react-router-dom";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
-import { observer } from 'mobx-react-lite'
+import { observer } from "mobx-react-lite";
 
-import styled from 'styled-components'
-import Countdown from './countdown'
-import Title from '../components/title'
-import { useBalance } from '@/lib/balance'
-import { useWallet } from '@/lib/wallet'
-import { useAddress } from '@/lib/address'
-import { useLucky } from '@/lib/lucky'
-import { usePool } from '@/lib/pool'
-import { useApprove } from '@/lib/approve'
-import Modal from '@/components/ui/Modal'
+import styled from "styled-components";
+import Countdown from "./countdown";
+import Title from "../components/title";
+import Button from "../components/button";
+import { useBalance } from "@/lib/balance";
+import { useWallet } from "@/lib/wallet";
+import { useAddress } from "@/lib/address";
+import { useLucky } from "@/lib/lucky";
+import { usePool } from "@/lib/pool";
+import { useApprove } from "@/lib/approve";
+import Modal from "@/components/ui/Modal";
+import { withTranslation } from "react-i18next";
+export default withTranslation()(
+  observer((props: any) => {
+    const {
+      Contracts: { fdao },
+      address,
+    } = useWallet();
+    const { t } = props;
+    const Addresses = useAddress();
+    const rankBalance = useBalance(fdao, Addresses.Rank);
+    const { burned, join, active, income, totalPay } = useLucky();
+    const { balance: poolBalance } = usePool();
+    const { approve, approved } = useApprove(fdao, Addresses.Lucky, address);
 
-export default observer((props: any) => {
-  const {
-    Contracts: { fdao },
-    address,
-  } = useWallet()
-  const Addresses = useAddress()
-  const rankBalance = useBalance(fdao, Addresses.Rank)
-  const { burned, join, active, income, totalPay } = useLucky()
-  const { balance: poolBalance } = usePool()
-  const { approve, approved } = useApprove(fdao, Addresses.Lucky, address)
+    const [loading, setLoading] = useState(false);
 
-  const [loading, setLoading] = useState(false)
-
-  const handleJoin = async () => {
-    setLoading(true)
-    if (totalPay.gt(0)) {
-      if (income.lt('400')) {
-        Modal.error('conditions are not met')
-        setLoading(false)
+    const handleJoin = async () => {
+      setLoading(true);
+      if (totalPay.gt(0)) {
+        if (income.lt("400")) {
+          Modal.error(t("tips.conditions"));
+          setLoading(false);
+        } else if (!approved) {
+          approve()
+            .then(() => {
+              Modal.success(t("tips.approve"));
+            })
+            .catch((err) => {
+              Modal.error(err);
+            })
+            .finally(() => setLoading(false));
+        } else {
+          active()
+            .then(() => {
+              Modal.success(t("tips.joinSuccess"));
+            })
+            .catch((err) => {
+              Modal.error(err);
+            })
+            .finally(() => setLoading(false));
+        }
       } else if (!approved) {
         approve()
           .then(() => {
-            Modal.success('Approve success, you can join now')
+            Modal.success(t("tips.approve"));
           })
           .catch((err) => {
-            Modal.error(err)
+            Modal.error(err);
           })
-          .finally(() => setLoading(false))
+          .finally(() => setLoading(false));
       } else {
-        active()
+        join()
           .then(() => {
-            Modal.success('Join success')
+            Modal.success(t("tips.joinSuccess"));
           })
           .catch((err) => {
-            Modal.error(err)
+            Modal.error(err);
           })
-          .finally(() => setLoading(false))
+          .finally(() => setLoading(false));
       }
-    } else if (!approved) {
-      approve()
-        .then(() => {
-          Modal.success('Approve success, you can join now')
-        })
-        .catch((err) => {
-          Modal.error(err)
-        })
-        .finally(() => setLoading(false))
-    } else {
-      join()
-        .then(() => {
-          Modal.success('Join success')
-        })
-        .catch((err) => {
-          Modal.error(err)
-        })
-        .finally(() => setLoading(false))
-    }
-  }
-  return (
-    <ViewStyled>
-      <Header />
-      <ContentStyle>
-        <HomeStyle>
-          <div className="top_info">
-            <img className="top_img" src={createURL('home_top_img.png')} />
-            <div className="ranking_view">
-              <div className="ranking_box">
-                <div>
-                  <Title>Ranking Pool</Title>
-                </div>
-                <div className="ranking_num">{rankBalance.toFixed(4)}</div>
-                <div className="count_view">
-                  <Countdown />
+    };
+    return (
+      <ViewStyled>
+        <Header />
+        <ContentStyle>
+          <HomeStyle>
+            <div className="top_info">
+              <img className="top_img" src={createURL("home_top_img.png")} />
+              <div className="ranking_view">
+                <div className="ranking_box">
+                  <div className="box_title">
+                    <Title>{t("home.rank")}</Title>
+                  </div>
+                  <div className="ranking_num">{rankBalance.toFixed(4)}</div>
+                  <div className="count_view">
+                    <Countdown />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="tips">
-              <p>A FAIR GAME OF CONTRACT</p>
-              <p>YOU MAYBE LOSE OR WIN FDAO</p>
-              <p>PLEASE ONLY USE "100FDAO" TO PLAY!</p>
+              <div className="tips">
+                <p>{t("home.intro_1")}</p>
+                <p>{t("home.intro_2")}</p>
+                <p>{t("home.intro_3")}</p>
+              </div>
+              <div className="btn_view">
+                <Button disabled={loading} onClick={handleJoin}>
+                  {t("home.joinBtn")}
+                </Button>
+              </div>
             </div>
-            <div className="btn_view">
-              <button disabled={loading} onClick={handleJoin}>
-                <img className="btn_join" src={createURL('btns/btn_join_now.png')} />
-              </button>
-            </div>
-          </div>
-          <div className="lucky_pool_view">
-            <div className="luck_box">
-              <div className="box_item">
-                <Title style={{ fontSize: '0.2rem' }}>Lucky Pool</Title>
-                <div className="item_pd">
-                  <div className="item_num_box">
-                    <div className="num">{poolBalance.toFixed(2)}</div>
-                    <div className="unit">FDAO</div>
+            <div className="lucky_pool_view">
+              <div className="luck_box">
+                <div className="box_item">
+                  <Title style={{ fontSize: "0.2rem" }}>{t("home.luck")}</Title>
+                  <div className="item_pd">
+                    <div className="item_num_box">
+                      <div className="num">{poolBalance.toFixed(2)}</div>
+                      <div className="unit">FDAO</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="box_item">
+                  <Title style={{ fontSize: "0.2rem" }}>
+                    {t("home.burned")}
+                  </Title>
+                  <div className="item_pd">
+                    <div className="item_num_box">
+                      <div className="num">{burned.toFixed(2)}</div>
+                      <div className="unit">FDAO</div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="box_item">
-                <Title style={{ fontSize: '0.2rem' }}>Burned FDAO</Title>
-                <div className="item_pd">
-                  <div className="item_num_box">
-                    <div className="num">{burned.toFixed(2)}</div>
-                    <div className="unit">FDAO</div>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-        </HomeStyle>
-      </ContentStyle>
-      <Footer />
-    </ViewStyled>
-  )
-})
+          </HomeStyle>
+        </ContentStyle>
+        <Footer />
+      </ViewStyled>
+    );
+  })
+);
 const ViewStyled = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
-`
+`;
 const ContentStyle = styled.div`
   position: relative;
   flex: 1;
   height: 0;
   flex-shrink: 0;
   overflow-y: auto;
-`
+`;
 const HomeStyle = styled.div`
   .top_info {
     text-align: center;
@@ -170,7 +176,12 @@ const HomeStyle = styled.div`
       .ranking_box {
         width: 100%;
         height: 2rem;
-        background: url(${createURL('rank_pool_box.png')}) no-repeat center bottom/100% 100%;
+        padding-top: 0.1rem;
+        background: url(${createURL("rank_pool_box.png")}) no-repeat center
+          bottom/100% 100%;
+        .box_title {
+          margin-top: -0.25rem;
+        }
       }
       .ranking_num {
         font-size: 0.3rem;
@@ -191,28 +202,29 @@ const HomeStyle = styled.div`
       object-fit: contain;
     }
     button {
-      background: none;
       outline: none;
     }
   }
   .lucky_pool_view {
     margin-top: 0.16rem;
     padding: 0 0.25rem 0.6rem;
-    background: url(${createURL('home_btm_bg.png')}) no-repeat center bottom/80%;
+    background: url(${createURL("home_btm_bg.png")}) no-repeat center bottom/80%;
     .luck_box {
       width: 100%;
       padding: 0.18rem;
       display: flex;
       align-items: center;
-      background: url(${createURL('lucky_box.png')}) no-repeat center/100% 100%;
+      background: url(${createURL("lucky_box.png")}) no-repeat center/100% 100%;
       .box_item {
         flex: 1;
+        width: 0;
         border: 1px solid transparent;
         border-radius: 0 0 0.1rem 0.1rem;
         background-color: #222;
         background-clip: padding-box, border-box;
         background-origin: padding-box, border-box;
-        background-image: linear-gradient(to bottom, #222, #222), linear-gradient(to bottom, #732aff, #d627fd);
+        background-image: linear-gradient(to bottom, #222, #222),
+          linear-gradient(to bottom, #732aff, #d627fd);
         &:last-child {
           margin-left: 0.08rem;
         }
@@ -242,4 +254,4 @@ const HomeStyle = styled.div`
       }
     }
   }
-`
+`;

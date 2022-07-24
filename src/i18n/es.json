@@ -1,0 +1,58 @@
+{
+    "header": {
+      "connect": "Conectar"
+    },
+    "home": {
+      "rank": "Grupo de clasificación",
+      "intro_1": "UN JUEGO JUSTO DE CONTRATO",
+      "intro_2": "PUEDE PERDER O GANAR FDAO",
+      "intro_3": "¡POR FAVOR UTILICE SÓLO \"100FDAO\" PARA JUGAR!",
+      "luck": "Piscina de la suerte",
+      "burned": "quemado FDAO",
+      "joinBtn": "¡ÚNETE AHORA!",
+      "join": "UNIRSE"
+    },
+    "rank": {
+      "rank": "RANGO",
+      "results": "Resultados de esta ronda",
+      "invitations": "mis invitaciones",
+      "myRanking": "mi clasificación",
+      "thisRound": "esta ronda",
+      "lastRound": "Última ronda",
+      "ranking": "Clasificación",
+      "inv": "Inv",
+      "address": "Dirección",
+      "lastBtn": "VER ÚLTIMA RONDA",
+      "thisBtn": "VER ESTA RONDA"
+    },
+    "claim": {
+      "claim": "RECLAMAR",
+      "claimBtn": "Reclamar",
+      "inviteesBtn": "Ver invitados",
+      "myIncome": "mis ingresos",
+      "countdown": "cuenta regresiva",
+      "maxProfit": "Ronda de ganancia máxima",
+      "revenue": "Ingresos generados",
+      "dividends": "Dividendos retirables",
+      "bonus": "Bono extraíble",
+      "tWithdrawable": "Total retirable",
+      "myRank": "Mi premio de rango",
+      "total": "Total 1er premio",
+      "myLucky": "mi premio de la suerte",
+      "projectedLucky": "premio de la suerte proyectado",
+      "withdrawable": "extraíble",
+      "myData": "Mis datos",
+      "tDividends": "Dividendos totales",
+      "tBonus": "bono total",
+      "tJoin": "Unión total FDAO",
+      "tInvitations": "Invitaciones totales",
+      "copy": "COPIAR"
+    },
+  
+    "tips": {
+      "conditions": "no se cumplen las condiciones",
+      "approve": "Aprobar éxito, puedes unirte ahora",
+      "joinSuccess": "Únete al éxito"
+    }
+  }
+  

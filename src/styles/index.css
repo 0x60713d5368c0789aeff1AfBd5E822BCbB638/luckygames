@@ -44,3 +44,6 @@ button {
 .popup-tips .ant-modal-content .ant-modal-body {
   padding: 0;
 }
+.ant-dropdown-menu-item-selected {
+  color: #d627fd;
+}

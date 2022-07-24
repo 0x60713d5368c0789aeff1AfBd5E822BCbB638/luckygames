@@ -6,10 +6,11 @@ export default (props: any) => {
 };
 
 const TitleStyle = styled.div`
+  padding: 0 0.05rem;
   width: 100%;
   max-width: 2.58rem;
   height: 0.46rem;
-  line-height: 0.32rem;
+  line-height: 0.34rem;
   margin: 0 auto;
   text-align: center;
   color: #d627fd;
@@ -19,4 +20,7 @@ const TitleStyle = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
