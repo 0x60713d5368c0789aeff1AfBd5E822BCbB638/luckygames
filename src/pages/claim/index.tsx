@@ -236,7 +236,7 @@ export default withTranslation()(
                     </div>
                   </div>
                   <div className="list_item">
-                    <label>{t("claim.tbonus")}</label>
+                    <label>{t("claim.tBonus")}</label>
                     <div className="value">
                       <span className="val_num">{totalBonus.toFixed(2)}</span>
                       <span className="val_unit">FDAO</span>
